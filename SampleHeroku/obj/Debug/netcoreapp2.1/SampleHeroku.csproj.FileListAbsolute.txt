@@ -1,0 +1,3 @@
+C:\Users\Toygar\source\repos\SampleHeroku\SampleHeroku\obj\Debug\netcoreapp2.1\SampleHeroku.csproj.CoreCompileInputs.cache
+C:\Users\Toygar\source\repos\SampleHeroku\SampleHeroku\obj\Debug\netcoreapp2.1\SampleHeroku.AssemblyInfoInputs.cache
+C:\Users\Toygar\source\repos\SampleHeroku\SampleHeroku\obj\Debug\netcoreapp2.1\SampleHeroku.AssemblyInfo.cs
