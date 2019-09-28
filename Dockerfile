@@ -1,19 +1,14 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
+FROM microsoft/dotnet:2.2-sdk AS build-env
 WORKDIR /app
 EXPOSE 80
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
-WORKDIR /src
-COPY ["SampleHeroku.csproj", "."]
-RUN dotnet restore "SampleHeroku.csproj"
-COPY . .
-WORKDIR "/src/SampleHeroku"
-RUN dotnet build "SampleHeroku.csproj" -c Release -o /app
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-FROM build AS publish
-RUN dotnet publish "SampleHeroku.csproj" -c Release -o /app
-
-FROM base AS final
+FROM microsoft/dotnet:2.2-aspnetcore-runtime
 WORKDIR /app
-COPY --from=publish /app .
+COPY --from=build-env /app/out .
+
 ENTRYPOINT ["dotnet", "SampleHeroku.dll"]
