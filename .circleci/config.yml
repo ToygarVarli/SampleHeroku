@@ -1,15 +1,18 @@
-machine:
-  services:
-    - docker
-
-dependencies:
-  cache_directories:
-    - ~/docker
-
-deployment:
-  staging:
-    branch: master
-    commands:
-      - docker login --email=$HEROKU_USERNAME --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
-      - docker build --rm=false -t registry.heroku.com/APP_NAME/web .
-      - docker push registry.heroku.com/APP_NAME/web:latest
+ deploy:
+    machine:
+      image: 'circleci/classic:edge'
+    steps:
+      - checkout
+      - run:
+          name: pull and push
+          command: |
+            git pull origin develop
+            git checkout master
+            git merge develop
+            git push origin master
+      - run:
+          name: Heroku
+          command: |
+            docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
+            docker build --rm=false -t registry.heroku.com/$HEROKU_APP_NAME/web .
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web:latest
