@@ -11,4 +11,4 @@ FROM microsoft/dotnet:2.2-aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-ENTRYPOINT ["dotnet", "SampleHeroku.dll"]
+CMD dotnet SampleHeroku.dll
